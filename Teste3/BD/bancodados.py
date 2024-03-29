@@ -53,7 +53,7 @@ def tabela_operadorasAtivas_csv(arquivos, config, batch_size=10000):
     query.execute("use testeIntuitiveCare")
 
     for nome in arquivos:
-        with open(f"Teste3/{nome}.csv", "r", encoding="latin-1") as file:
+        with open(f"Teste3/{nome}.csv", "r", encoding="utf-8") as file:
             linhas = file.readlines()[1:]
             for i in range(0, len(linhas), batch_size):
                 batch = linhas[i:i + batch_size]
@@ -62,7 +62,7 @@ def tabela_operadorasAtivas_csv(arquivos, config, batch_size=10000):
                 dados_tuplas = [tuple(linha) for linha in dados]
 
                 query.executemany("""
-                    INSERT IGNORE INTO operacoes_ativas (
+                    INSERT INTO operacoes_ativas (
                         DATA_OP, REG_ANS, CD_CONTA_CONTABIL, DESCRICAO, VL_SALDO_INICIAL, VL_SALDO_FINAL
                     ) VALUES (%s, %s, %s, %s, %s, %s)
                 """, dados_tuplas)
@@ -72,19 +72,43 @@ def tabela_operadorasAtivas_csv(arquivos, config, batch_size=10000):
     query.close()
     conexao.close()  
 
+#----------------------------------------------------    
+
+def querys_analiticas(config):
+    conexao = mysql.connector.connect(**config)
+    query = conexao.cursor()
+    query.execute("use testeIntuitiveCare")
+    with open("Teste3/BD/querys_analiticas.sql", "r", encoding="utf-8") as script:
+        script_sql = script.read()
+        script_result = script_sql.strip().split(';')
+    for comando in script_result:
+            print(comando)
+            query.execute(comando)
+            conexao.commit()
+
+            resultados = query.fetchall()
+
+            for resultado in resultados:
+                print(resultado)
+
+    #conexao.commit()
+    query.close()
+    conexao.close()
+
 #----------------------------------------------------            
 try:
-    arquivos = ["1T2022", "2T2022", "3T2022", "4T2022", "1T2023", "2T2023", "3T2023"]
+    arquivos = ["3T2022", "4T2022","2T2023", "3T2023"]
     config = {"host": "127.0.0.1","user": "root","password": "","connect_timeout": 5000}
     conexao = mysql.connector.connect(**config)
 
     query = conexao.cursor()
     query.execute("CREATE DATABASE IF NOT EXISTS testeIntuitiveCare")
     
-    tabela_demonstracoes_script(config)
-    tabela_demonstracoes_csv(config)
-    tabela_operadorasAtivas_script(config)
+    # tabela_demonstracoes_script(config)
+    # tabela_demonstracoes_csv(config)
+    #tabela_operadorasAtivas_script(config)
     tabela_operadorasAtivas_csv(arquivos,config)
+    querys_analiticas(config)
     
 except mysql.connector.Error as err:
     print(f"Erro ao conectar ao MySQL: {err}")
