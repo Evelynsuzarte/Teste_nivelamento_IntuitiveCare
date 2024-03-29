@@ -70,7 +70,7 @@ palavras_novas = ["Seg. Odontológica","Seg. Ambulatorial"]
 
 #baixar_arquivosPDF(url,nomes_arquivos)
 #transformar_zip("Teste1/"+nomes_arquivos, nome_zip_teste1)
-#transformar_csv(nomes_arquivos[0])
-#alterar_palavra("Anexo_I_Rol_2021RN_465.2021_RN599_RN600.csv",palavras_antigas, palavras_novas)
-transformar_zip(["Teste2/corrigido_"+nomes_arquivos[0][:-4]+".csv"], nome_zip_teste2)
+transformar_csv(nomes_arquivos[0])
+alterar_palavra("Anexo_I_Rol_2021RN_465.2021_RN599_RN600.csv",palavras_antigas, palavras_novas)
+#transformar_zip(["Teste2/corrigido_"+nomes_arquivos[0][:-4]+".csv"], nome_zip_teste2)
 

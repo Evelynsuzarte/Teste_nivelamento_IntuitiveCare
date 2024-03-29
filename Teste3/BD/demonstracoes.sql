@@ -1,9 +1,11 @@
 CREATE TABLE IF NOT EXISTS demonstracoes (
-    Registro_ANS INT PRIMARY KEY NOT NULL,
+    Registro_ANS VARCHAR(10),
     CNPJ VARCHAR(50) NOT NULL,
     Razao_Social VARCHAR(100) NOT NULL,
+    Nome_Fantasia VARCHAR(100),
+    Modalidade VARCHAR(100),
     Logradouro VARCHAR(100),
-    Numero INT,
+    Numero VARCHAR(20),
     Complemento VARCHAR(50),
     Bairro VARCHAR(50),
     Cidade VARCHAR(50),
@@ -16,8 +18,6 @@ CREATE TABLE IF NOT EXISTS demonstracoes (
     Representante VARCHAR(100),
     Cargo_Representante VARCHAR(50),
     Regiao_de_Comercializacao VARCHAR(50),
-    Data_Registro_ANS DATE
+    Data_Registro_ANS DATE,
+    PRIMARY KEY (Registro_ANS)
 );
-
-LOAD DATA INFILE 'Teste3/Relatorio_cadop.csv' INTO TABLE demonstracoes FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS; 
-
