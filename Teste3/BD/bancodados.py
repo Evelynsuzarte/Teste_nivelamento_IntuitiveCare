@@ -104,9 +104,9 @@ try:
     query = conexao.cursor()
     query.execute("CREATE DATABASE IF NOT EXISTS testeIntuitiveCare")
     
-    # tabela_demonstracoes_script(config)
-    # tabela_demonstracoes_csv(config)
-    #tabela_operadorasAtivas_script(config)
+    tabela_demonstracoes_script(config)
+    tabela_demonstracoes_csv(config)
+    tabela_operadorasAtivas_script(config)
     tabela_operadorasAtivas_csv(arquivos,config)
     querys_analiticas(config)
     
