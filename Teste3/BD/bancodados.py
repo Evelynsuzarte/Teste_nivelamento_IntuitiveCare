@@ -1,4 +1,5 @@
 import mysql.connector
+import time
 
 def tabela_demonstracoes_script(config):
     conexao = mysql.connector.connect(**config)
@@ -6,7 +7,7 @@ def tabela_demonstracoes_script(config):
     query.execute("use testeIntuitiveCare")
     with open("Teste3/BD/demonstracoes.sql", "r") as script:
         script_sql = script.read()
-        print(script_sql)
+        #print(script_sql)
         script_sql = script_sql.replace('\n', '').strip() 
     query.execute(script_sql)
     conexao.commit()
@@ -40,7 +41,7 @@ def tabela_operadorasAtivas_script(config):
 
     with open("Teste3/BD/operadoras_ativas.sql", "r") as script:
         script_sql = script.read()
-        print(script_sql)
+        #print(script_sql)
         
     query.execute(script_sql)
     conexao.commit()
@@ -82,16 +83,16 @@ def querys_analiticas(config):
         script_sql = script.read()
         script_result = script_sql.strip().split(';')
     for comando in script_result:
-            print(comando)
+            #print(comando)
             query.execute(comando)
             conexao.commit()
 
             resultados = query.fetchall()
 
             for resultado in resultados:
-                print(resultado)
+                 print(resultado)
 
-    #conexao.commit()
+    conexao.commit()
     query.close()
     conexao.close()
 
@@ -116,6 +117,5 @@ finally:
     if 'conexao' in locals() and conexao.is_connected():
         query.close()
         conexao.close()
-
 
 
